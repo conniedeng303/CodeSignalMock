@@ -1,0 +1,14 @@
+{
+    "name": "CodesignalMock",
+    "description": "",
+    "version": "1.0",
+    "manifest_version": 3,
+    "action": {
+      "default_popup": "popup/index.html",
+      "default_icon": "icons/chiikawaIcon.png"
+    },
+    "permissions": ["tabs","activeTab","storage","scripting","identity"],
+    "background": {
+      "service_worker": "background.js"
+    }
+ }

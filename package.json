@@ -1,0 +1,11 @@
+{
+  "name": "CodeSignalMock",
+  "lockfileVersion": 3,
+  "requires": true,
+  "main": "server.js",
+  "type": "module",
+  "packages": {},
+  "scripts": {
+    "start": "node server.js"
+  }
+}

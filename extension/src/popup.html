@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <script src="../lib/papaparse.min.js"></script> 
+    <link rel="stylesheet" href="styles.css" />
+    <script src="../lib/papaparse.min.js"></script>
     <script type="module" src="popup.js"></script>
   </head>
   <body>
@@ -12,7 +13,11 @@
       <option value="easy">Easy</option>
       <option value="medium">Medium</option>
       <option value="hard">Hard</option>
+      <option value="NULL">Empty</option>
     </select>
+
+    <label for="topic1">Question 1 Topic:</label>
+    <input list="topics" id="topic1" name="topic1" placeholder="Type to filter...">
 
     <label for="diff2">Question 2 Difficulty:</label>
     <select id="diff2">
@@ -22,6 +27,9 @@
       <option value="NULL">Empty</option>
     </select>
 
+    <label for="topic2">Question 2 Topic:</label>
+    <input list="topics" id="topic2" name="topic2" placeholder="Type to filter...">
+
     <label for="diff3">Question 3 Difficulty:</label>
     <select id="diff3">
       <option value="easy">Easy</option>
@@ -29,6 +37,9 @@
       <option value="hard">Hard</option>
       <option value="NULL">Empty</option>
     </select>
+
+    <label for="topic3">Question 3 Topic:</label>
+    <input list="topics" id="topic3" name="topic3" placeholder="Type to filter...">
 
     <label for="diff4">Question 4 Difficulty:</label>
     <select id="diff4">
@@ -38,8 +49,51 @@
       <option value="NULL">Empty</option>
     </select>
 
+    <label for="topic4">Question 4 Topic:</label>
+    <input list="topics" id="topic4" name="topic4" placeholder="Type to filter...">
+
+    <datalist id="topics">
+      <option value="Array">
+      <option value="Dynamic Programming">
+      <option value="String">
+      <option value="Sort">
+      <option value="Stack">
+      <option value="Tree">
+      <option value="Depth-first Search">
+      <option value="Design">
+      <option value="Math">
+      <option value="Binary Search">
+      <option value="Hash Table">
+      <option value="Greedy">
+      <option value="Brainteaser">
+      <option value="Geometry">
+      <option value="Bit Manipulation">
+      <option value="Union Find">
+      <option value="Backtracking">
+      <option value="OOP">
+      <option value="Trie">
+      <option value="Rolling Hash">
+      <option value="Linked List">
+      <option value="Dequeue">
+      <option value="Heap">
+      <option value="Ordered Map">
+      <option value="Suffix Array">
+      <option value="Graph">
+      <option value="Breadth-first Search">
+      <option value="Divide and Conquer">
+      <option value="Meet in the Middle">
+      <option value="Recursion">
+      <option value="Two Pointers">
+      <option value="Sliding Window">
+      <option value="Minimax">
+      <option value="Reservoir Sampling">
+      <option value="Indexed Tree">
+      <option value="Segment Tree">
+      <option value="Line Sweep">
+    </datalist>
+
     <div class="flex gap-4">
-      <button id="open">Submit</button>
+      <button id="submit">Submit</button>
     </div>
   </body>
 </html>

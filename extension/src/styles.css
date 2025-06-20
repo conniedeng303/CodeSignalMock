@@ -1,0 +1,20 @@
+/* hide/show */
+.hidden {
+  display: none !important;
+}
+
+/* a couple of the most‐used helpers from your HTML */
+.flex       { display: flex; }
+.gap-2      { gap: .5rem; }
+.w-full     { width: 100%; }
+.p-2        { padding: .5rem; }
+.mb-2       { margin-bottom: .5rem; }
+.border     { border: 1px solid #ccc; }
+.rounded    { border-radius: .25rem; }
+.text-xl    { font-size: 1.25rem; font-weight: 700; }
+.font-bold  { font-weight: 700; }
+.text-sm    { font-size: .875rem; }
+.mt-2       { margin-top: .5rem; }
+.bg-blue-500   { background-color: #3b82f6; }
+.bg-green-500  { background-color: #10b981; }
+.text-white    { color: #fff; }

@@ -13,6 +13,9 @@
           "matches": ["<all_urls>"]
         }
     ],
+    "host_permissions": [
+    "http://localhost:3000/*"
+    ],
     "permissions": ["tabs","activeTab","storage","scripting","identity","alarms"]
 
  }

@@ -7,7 +7,21 @@
   </head>
   <body>
     <h1>CodeSignal Mocks Testing!</h1>
+    <div id="auth">
+      <div style="display: flex; justify-content: center;">
+        <h2>Login!</h2>
+      </div>
+      <div>
+        <input type="text" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+      </div>
+      <div>
+        <button id="login-btn" class="primary-btn">Login</button>
+        <button id="register-btn" class="secondary-btn">Signup</button>
+      </div>
+    </div>
 
+    <div id="questions" style="display: none;">
     <label for="diff1">Question 1 Difficulty:</label>
     <select id="diff1">
       <option value="easy">Easy</option>
@@ -51,7 +65,6 @@
 
     <label for="topic4">Question 4 Topic:</label>
     <input list="topics" id="topic4" name="topic4" placeholder="Type to filter...">
-
     <datalist id="topics">
       <option value="Array">
       <option value="Dynamic Programming">
@@ -92,8 +105,10 @@
       <option value="Line Sweep">
     </datalist>
 
+
     <div class="flex gap-4">
       <button id="submit">Submit</button>
     </div>
+  </div>
   </body>
 </html>

@@ -1,3 +1,15 @@
+
+document.getElementById('auth').style.display = 'block';
+document.getElementById('login-btn').addEventListener('click', () => {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('questions').style.display = 'block';
+});
+
+document.getElementById('register-btn').addEventListener('click', () => {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('questions').style.display = 'block';
+});
+
 document.getElementById("submit").addEventListener("click", async () => {
   const difficulties = [
     document.getElementById("diff1").value,

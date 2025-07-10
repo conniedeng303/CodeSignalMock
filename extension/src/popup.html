@@ -4,10 +4,35 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="../lib/papaparse.min.js"></script>
     <script type="module" src="popup.js"></script>
+    <style>
+      body {
+        margin: 50;
+      }
+
+      .container {
+        width: 200px;
+        height: 350px;
+      }
+    </style>
   </head>
   <body>
+    <div class = "container">
     <h1>CodeSignal Mocks Testing!</h1>
+    <div id="auth">
+      <div style="display: flex; justify-content: center;">
+        <h2>Login!</h2>
+      </div>
+      <div>
+        <input type="text" id="email" placeholder="Email">
+        <input type="password" id="password" placeholder="Password">
+      </div>
+      <div>
+        <button id="login-btn" class="primary-btn">Login</button>
+        <button id="register-btn" class="secondary-btn">Signup</button>
+      </div>
+    </div>
 
+    <div id="questions" style="display: none;">
     <label for="diff1">Question 1 Difficulty:</label>
     <select id="diff1">
       <option value="easy">Easy</option>
@@ -51,7 +76,6 @@
 
     <label for="topic4">Question 4 Topic:</label>
     <input list="topics" id="topic4" name="topic4" placeholder="Type to filter...">
-
     <datalist id="topics">
       <option value="Array">
       <option value="Dynamic Programming">
@@ -92,8 +116,12 @@
       <option value="Line Sweep">
     </datalist>
 
-    <div class="flex gap-4">
-      <button id="submit">Submit</button>
-    </div>
+  <div class="footer">
+    <button id="submit">Submit</button>
+    <button id="match">Match!</button>
+    <button id="log-out">Log Out</button>
+  </div>
+  </div>
+
   </body>
 </html>

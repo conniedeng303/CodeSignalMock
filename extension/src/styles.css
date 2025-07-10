@@ -3,7 +3,6 @@
   display: none !important;
 }
 
-/* a couple of the most‐used helpers from your HTML */
 .flex       { display: flex; }
 .gap-2      { gap: .5rem; }
 .w-full     { width: 100%; }
@@ -18,3 +17,15 @@
 .bg-blue-500   { background-color: #3b82f6; }
 .bg-green-500  { background-color: #10b981; }
 .text-white    { color: #fff; }
+
+.footer {
+  position: fixed;
+  bottom: 1rem;
+  left: 0;
+  width: 100%;
+  display: flex;
+  justify-content: space-between; /* submit left, logout right */
+  padding: 0 1rem;
+  box-sizing: border-box;
+  z-index: 1000;
+}

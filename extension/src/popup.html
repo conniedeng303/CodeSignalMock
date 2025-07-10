@@ -4,8 +4,19 @@
     <link rel="stylesheet" href="styles.css" />
     <script src="../lib/papaparse.min.js"></script>
     <script type="module" src="popup.js"></script>
+    <style>
+      body {
+        margin: 50;
+      }
+
+      .container {
+        width: 200px;
+        height: 350px;
+      }
+    </style>
   </head>
   <body>
+    <div class = "container">
     <h1>CodeSignal Mocks Testing!</h1>
     <div id="auth">
       <div style="display: flex; justify-content: center;">
@@ -105,10 +116,12 @@
       <option value="Line Sweep">
     </datalist>
 
-
-    <div class="flex gap-4">
-      <button id="submit">Submit</button>
-    </div>
+  <div class="footer">
+    <button id="submit">Submit</button>
+    <button id="match">Match!</button>
+    <button id="log-out">Log Out</button>
   </div>
+  </div>
+
   </body>
 </html>

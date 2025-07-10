@@ -1,14 +1,84 @@
 
 document.getElementById('auth').style.display = 'block';
-document.getElementById('login-btn').addEventListener('click', () => {
-  document.getElementById('auth').style.display = 'none';
-  document.getElementById('questions').style.display = 'block';
+// document.getElementById('login-btn').addEventListener('click', () => {
+//   document.getElementById('auth').style.display = 'none';
+//   document.getElementById('questions').style.display = 'block';
+// });
+
+// Check if user is already logged in
+window.addEventListener('DOMContentLoaded', () => {
+  const user = localStorage.getItem('user');
+  if (user) {
+    document.getElementById('auth').style.display = 'none';
+    document.getElementById('questions').style.display = 'block';
+  }
 });
 
-document.getElementById('register-btn').addEventListener('click', () => {
-  document.getElementById('auth').style.display = 'none';
-  document.getElementById('questions').style.display = 'block';
+document.getElementById('login-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  try {
+    const res = await fetch('http://localhost:5000/api/login', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+
+    if (data.success) {
+      console.log('Login success');
+      localStorage.setItem('user', email);
+      document.getElementById('auth').style.display = 'none';
+      document.getElementById('questions').style.display = 'block';
+    } else {
+      alert(data.message || 'Login failed');
+    }
+  } catch (err) {
+    console.error('Login error:', err);
+    alert('Something went wrong!');
+  }
 });
+
+// SIGNUP handler
+document.getElementById('register-btn').addEventListener('click', async () => {
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
+
+  if (!email || !password) {
+    alert("Email and password required");
+    return;
+  }
+
+  try {
+    const res = await fetch('http://localhost:5000/api/signup', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ email, password })
+    });
+
+    const data = await res.json();
+    console.log('SIGNUP RESPONSE:', data);
+
+    if (data.success) {
+      alert('Signup successful!');
+      localStorage.setItem('user', email);
+      document.getElementById('auth').style.display = 'none';
+      document.getElementById('questions').style.display = 'block';
+    } else {
+      alert(data.message || 'Signup failed');
+    }
+  } catch (err) {
+    console.error('Signup error:', err);
+    alert('Something went wrong during signup.');
+  }
+});
+
+
+document.getElementById('match').addEventListener('click', () => {
+  window.location.href = 'match.html'
+})
 
 document.getElementById("submit").addEventListener("click", async () => {
   const difficulties = [

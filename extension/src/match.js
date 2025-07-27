@@ -5,13 +5,18 @@ const diff = document.getElementById('diff');
 const topic = document.getElementById('topic');
 const matchBtn = document.getElementById('match');
 const backBtn = document.getElementById('back');
+const connectBtn = document.getElementById('connect');
+const roomIdInput = document.getElementById('room-id');
+const passwordInput = document.getElementById('room-pass');
 const statusDiv = document.getElementById('match-status');
 const waitingDiv = document.getElementById('waiting');
 const setupDiv = document.getElementById('setup');
+let roomPassword = '';
 
-function initRoom() {
+function initRoom(roomId, password) {
   socket.emit('createRoom', {
-    roomId: 'testRoom123',
+    roomId,
+    password,
     config: {}
   });
 }
@@ -26,7 +31,7 @@ socket.on('roomCreated', (roomId) => {
 
 socket.on('roomError', (msg) => {
   if (msg === 'Room already exists') {
-    socket.emit('joinRoom', { roomId: 'testRoom123' });
+    socket.emit('joinRoom', { roomId: currentRoomId, password: roomPassword });
   } else {
     if (statusDiv) {
       statusDiv.textContent = msg;
@@ -45,11 +50,25 @@ socket.on('roomReady', ({ roomId }) => {
   }
 });
 
-initRoom();
+connectBtn.addEventListener('click', () => {
+  const id = roomIdInput.value.trim();
+  roomPassword = passwordInput.value;
+  if (!id) {
+    alert('Please enter a room ID');
+    return;
+  }
+  initRoom(id, roomPassword);
+});
 
 matchBtn.addEventListener('click', async () => {
   const difficulty = diff.value.toLowerCase();
   const topicValue = topic.value.toLowerCase().trim();
+
+  if (!currentRoomId) {
+    alert('Please connect to a room first.');
+    return;
+  }
+
   setupDiv.classList.add('hidden');
   if (waitingDiv) waitingDiv.classList.remove('hidden');
 

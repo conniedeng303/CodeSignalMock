@@ -1,13 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <title>Matchmaking Room</title>
-  <link rel="stylesheet" href="styles.css" />
-  <script src="../lib/papaparse.min.js"></script>
-  <script src="../lib/socket.io.min.js"></script>
-  
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Matchmaking</title>
   <style>
     body {
+      font-family: Arial, sans-serif;
+      padding: 2rem;
       margin: 50;
     }
 
@@ -15,6 +15,7 @@
       width: 200px;
       height: 350px;
     }
+
     label, select, input {
       display: block;
       margin-bottom: 1rem;
@@ -30,11 +31,23 @@
       padding: 0.5rem 1rem;
       cursor: pointer;
     }
+
+    .hidden {
+      display: none;
+    }
   </style>
 </head>
 <body>
   <div class="container" id="setup">
     <h2>Matchmaking Setup</h2>
+
+    <label for="room-id">Room ID:</label>
+    <input id="room-id" />
+
+    <label for="room-pass">Room Password:</label>
+    <input id="room-pass" type="password" />
+
+    <button id="connect" class="mb-2">Connect</button>
 
     <label for="diff">Question Difficulty:</label>
     <select id="diff">
@@ -61,10 +74,6 @@
       <option value="Brainteaser">
       <option value="Geometry">
       <option value="Bit Manipulation">
-      <option value="Union Find">
-      <option value="Backtracking">
-      <option value="OOP">
-      <option value="Trie">
       <option value="Rolling Hash">
       <option value="Linked List">
       <option value="Dequeue">
@@ -90,10 +99,13 @@
       <button id="back">Back</button>
     </div>
   </div>
+
   <div id="waiting" class="hidden">
-  <p>Waiting for opponent...</p>
+    <p>Waiting for opponent...</p>
   </div>
-<div id="match-status" class="hidden"></div>
+
+  <div id="match-status" class="hidden"></div>
+
   <script src="match.js"></script>
 </body>
 </html>

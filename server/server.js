@@ -28,13 +28,14 @@ const rooms = new Map();
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  socket.on('createRoom', ({ roomId, config }) => {
+  socket.on('createRoom', ({ roomId, password, config }) => {
     if (rooms.has(roomId)) {
       socket.emit('roomError', 'Room already exists');
       return;
     }
 
     rooms.set(roomId, {
+      password,
       hostSocket: socket,
       guestSocket: null,
       hostReady: false,
@@ -45,12 +46,18 @@ io.on('connection', (socket) => {
 
     socket.join(roomId);
     socket.emit('roomCreated', roomId);
+    console.log(`Room created: ${roomId}. Total rooms: ${rooms.size}`);
   });
 
-  socket.on('joinRoom', ({ roomId }) => {
+  socket.on('joinRoom', ({ roomId, password }) => {
     const room = rooms.get(roomId);
     if (!room) {
       socket.emit('roomError', 'Room not found');
+      return;
+    }
+
+    if (room.password !== password) {
+      socket.emit('roomError', 'Incorrect password');
       return;
     }
 
@@ -62,6 +69,8 @@ io.on('connection', (socket) => {
     room.guestSocket = socket;
     room.guestReady = false;
     socket.join(roomId);
+
+    console.log(`Room joined: ${roomId}. Total rooms: ${rooms.size}`);
 
     io.to(roomId).emit('roomReady', {
       roomId,
@@ -105,6 +114,7 @@ io.on('connection', (socket) => {
       if (room.hostSocket === socket || room.guestSocket === socket) {
         io.to(roomId).emit('roomClosed');
         rooms.delete(roomId);
+        console.log(`Room removed: ${roomId}. Total rooms: ${rooms.size}`);
         break;
       }
     }

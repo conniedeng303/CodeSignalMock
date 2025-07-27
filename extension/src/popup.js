@@ -147,9 +147,3 @@ document.getElementById("submit").addEventListener("click", async () => {
     alert("Failed to load problem list.");
   }
 });
-
-document.getElementById("upload").addEventListener("click", async () => {
-
-
-
-});

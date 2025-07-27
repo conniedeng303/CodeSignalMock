@@ -6,20 +6,52 @@ const topic = document.getElementById('topic');
 const matchBtn = document.getElementById('match');
 const backBtn = document.getElementById('back');
 const statusDiv = document.getElementById('match-status');
+const waitingDiv = document.getElementById('waiting');
+const setupDiv = document.getElementById('setup');
 
-socket.emit('joinRoom', {
-  roomId: 'testRoom123',
-  password: 'abc',
+function initRoom() {
+  socket.emit('createRoom', {
+    roomId: 'testRoom123',
+    config: {}
+  });
+}
+
+socket.on('roomCreated', (roomId) => {
+  currentRoomId = roomId;
+  if (statusDiv) {
+    statusDiv.textContent = `Created room: ${roomId}`;
+    statusDiv.classList.remove('hidden');
+  }
+});
+
+socket.on('roomError', (msg) => {
+  if (msg === 'Room already exists') {
+    socket.emit('joinRoom', { roomId: 'testRoom123' });
+  } else {
+    if (statusDiv) {
+      statusDiv.textContent = msg;
+      statusDiv.classList.remove('hidden');
+    } else {
+      alert(msg);
+    }
+  }
 });
 
 socket.on('roomReady', ({ roomId }) => {
   currentRoomId = roomId;
-  alert(`Connected to room: ${roomId}`);
+  if (statusDiv) {
+    statusDiv.textContent = `Connected to room: ${roomId}`;
+    statusDiv.classList.remove('hidden');
+  }
 });
+
+initRoom();
 
 matchBtn.addEventListener('click', async () => {
   const difficulty = diff.value.toLowerCase();
   const topicValue = topic.value.toLowerCase().trim();
+  setupDiv.classList.add('hidden');
+  if (waitingDiv) waitingDiv.classList.remove('hidden');
 
   try {
     const response = await fetch(chrome.runtime.getURL('shared/leetcode-problems.csv'));
@@ -37,13 +69,15 @@ matchBtn.addEventListener('click', async () => {
     );
 
     if (filtered.length === 0) {
+      if (waitingDiv) waitingDiv.classList.add('hidden');
       alert('No matching problem found.');
+      setupDiv.classList.remove('hidden');
       return;
     }
 
     const random = filtered[Math.floor(Math.random() * filtered.length)];
 
-    socket.emit('sendQuestionToRoom', {
+    socket.emit('playerReady', {
       roomId: currentRoomId,
       question: {
         url: random.url,
@@ -53,12 +87,16 @@ matchBtn.addEventListener('click', async () => {
       }
     });
   } catch (err) {
+    if (waitingDiv) waitingDiv.classList.add('hidden');
+    setupDiv.classList.remove('hidden');
     console.error('CSV Error:', err);
     alert('Failed to load question list.');
   }
 });
 
 socket.on('startMatch', (question) => {
+  if (waitingDiv) waitingDiv.classList.add('hidden');
+  if (statusDiv) statusDiv.classList.add('hidden');
   const confirmed = confirm(`Open this question?\n${question.title} (${question.difficulty})`);
   if (confirmed && question.url) {
     console.log("➡ Opening question:", question.url);
@@ -86,7 +124,11 @@ socket.on('matchOver', ({ winnerSocket }) => {
     ? "🎉 You won!"
     : "❌ You lost! Your opponent solved it first.";
 
-  if (statusDiv) statusDiv.textContent = msg;
+  if (statusDiv) {
+    statusDiv.textContent = msg;
+    statusDiv.classList.remove('hidden');
+  }
+  if (waitingDiv) waitingDiv.classList.add('hidden');
 });
 
 backBtn.addEventListener('click', () => {

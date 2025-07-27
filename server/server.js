@@ -29,7 +29,7 @@ const rooms = new Map();
 io.on('connection', (socket) => {
   console.log('User connected:', socket.id);
 
-  socket.on('createRoom', ({ roomId, password, config }) => {
+  socket.on('createRoom', ({ roomId, config }) => {
     if (rooms.has(roomId)) {
       socket.emit('roomError', 'Room already exists');
       return;
@@ -38,7 +38,6 @@ io.on('connection', (socket) => {
     rooms.set(roomId, {
       hostSocket: socket,
       guestSocket: null,
-      password,
       config
     });
 
@@ -46,17 +45,14 @@ io.on('connection', (socket) => {
     socket.emit('roomCreated', roomId);
   });
 
-  socket.on('joinRoom', ({ roomId, password }) => {
+  socket.on('joinRoom', ({ roomId }) => {
     const room = rooms.get(roomId);
     if (!room) {
       socket.emit('roomError', 'Room not found');
       return;
     }
 
-    if (room.password !== password) {
-      socket.emit('roomError', 'Incorrect password');
-      return;
-    }
+
 
     if (room.guestSocket) {
       socket.emit('roomError', 'Room already full');

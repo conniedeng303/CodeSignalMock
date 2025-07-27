@@ -33,7 +33,7 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="container" id="setup">
     <h2>Matchmaking Setup</h2>
 
     <label for="diff">Question Difficulty:</label>
@@ -90,6 +90,10 @@
       <button id="back">Back</button>
     </div>
   </div>
+  <div id="waiting" class="hidden">
+  <p>Waiting for opponent...</p>
+  </div>
+<div id="match-status" class="hidden"></div>
   <script src="match.js"></script>
 </body>
 </html>

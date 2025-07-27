@@ -3,32 +3,49 @@
 <head>
   <title>Matchmaking Room</title>
   <link rel="stylesheet" href="styles.css" />
-  <script type="module" src="match.js"></script>
-    <style>
+  <script src="../lib/papaparse.min.js"></script>
+  <script src="../lib/socket.io.min.js"></script>
+  
+  <style>
     body {
-    margin: 50;
+      margin: 50;
     }
 
     .container {
-    width: 200px;
-    height: 350px;
+      width: 200px;
+      height: 350px;
     }
-    </style>
+    label, select, input {
+      display: block;
+      margin-bottom: 1rem;
+      width: 100%;
+    }
+
+    .footer {
+      display: flex;
+      justify-content: space-between;
+    }
+
+    button {
+      padding: 0.5rem 1rem;
+      cursor: pointer;
+    }
+  </style>
 </head>
 <body>
-<div class = "container">
-  <h2>Welcome to Matchmaking</h2>
-    <label for="diff3">Question 3 Difficulty:</label>
-    <select id="diff3">
+  <div class="container">
+    <h2>Matchmaking Setup</h2>
+
+    <label for="diff">Question Difficulty:</label>
+    <select id="diff">
       <option value="easy">Easy</option>
       <option value="medium">Medium</option>
       <option value="hard">Hard</option>
-      <option value="NULL">Empty</option>
     </select>
 
-    <label for="topic3">Question 3 Topic:</label>
-    <input list="topics" id="topic3" name="topic3" placeholder="Type to filter...">
-        <datalist id="topics">
+    <label for="topic">Question Topic:</label>
+    <input list="topics" id="topic" name="topic" placeholder="Type to filter..." />
+    <datalist id="topics">
       <option value="Array">
       <option value="Dynamic Programming">
       <option value="String">
@@ -67,11 +84,12 @@
       <option value="Segment Tree">
       <option value="Line Sweep">
     </datalist>
+
     <div class="footer">
-    <button id="submit">Submit</button>
-    <button id="match">Match!</button>
-    <button id="log-out">Log Out</button>
+      <button id="match">Match!</button>
+      <button id="back">Back</button>
     </div>
-</div>
+  </div>
+  <script src="match.js"></script>
 </body>
 </html>

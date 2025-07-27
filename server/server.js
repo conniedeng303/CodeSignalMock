@@ -1,8 +1,7 @@
-require('dotenv').config();
 const express = require('express');
-const cors = require('cors');
 const mongoose = require('mongoose');
-const authRoutes = require('./routes/auth');
+const cors = require('cors');
+const authRoutes = require('./routes/authRoutes');
 const http = require('http');
 const { Server } = require('socket.io');
 
@@ -38,6 +37,9 @@ io.on('connection', (socket) => {
     rooms.set(roomId, {
       hostSocket: socket,
       guestSocket: null,
+      hostReady: false,
+      guestReady: false,
+      question: null,
       config
     });
 
@@ -52,14 +54,13 @@ io.on('connection', (socket) => {
       return;
     }
 
-
-
     if (room.guestSocket) {
       socket.emit('roomError', 'Room already full');
       return;
     }
 
     room.guestSocket = socket;
+    room.guestReady = false;
     socket.join(roomId);
 
     io.to(roomId).emit('roomReady', {
@@ -68,8 +69,29 @@ io.on('connection', (socket) => {
     });
   });
 
-  socket.on('sendQuestionToRoom', ({ roomId, question }) => {
-    io.to(roomId).emit('startMatch', question);
+  socket.on('playerReady', ({ roomId, question }) => {
+    const room = rooms.get(roomId);
+    if (!room) {
+      socket.emit('roomError', 'Room not found');
+      return;
+    }
+
+    if (socket === room.hostSocket) {
+      room.hostReady = true;
+    } else if (socket === room.guestSocket) {
+      room.guestReady = true;
+    }
+
+    if (!room.question && question) {
+      room.question = question;
+    }
+
+    if (room.hostReady && room.guestReady && room.question) {
+      io.to(roomId).emit('startMatch', room.question);
+      room.hostReady = false;
+      room.guestReady = false;
+      room.question = null;
+    }
   });
 
   socket.on('playerSolved', ({ roomId }) => {

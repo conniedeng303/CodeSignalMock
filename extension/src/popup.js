@@ -1,9 +1,9 @@
 
 document.getElementById('auth').style.display = 'block';
-// document.getElementById('login-btn').addEventListener('click', () => {
-//   document.getElementById('auth').style.display = 'none';
-//   document.getElementById('questions').style.display = 'block';
-// });
+document.getElementById('login-btn').addEventListener('click', () => {
+  document.getElementById('auth').style.display = 'none';
+  document.getElementById('questions').style.display = 'block';
+});
 
 // Check if user is already logged in
 window.addEventListener('DOMContentLoaded', () => {
